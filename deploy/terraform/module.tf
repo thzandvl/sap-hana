@@ -49,6 +49,23 @@ module "hdb_node" {
   ppg              = module.common_infrastructure.ppg
 }
 
+# Create anydb database nodes
+module "anydb_node" {
+  source           = "./modules/anydb_node"
+  databases        = var.databases
+  infrastructure   = var.infrastructure
+  jumpboxes        = var.jumpboxes
+  options          = var.options
+  software         = var.software
+  ssh-timeout      = var.ssh-timeout
+  sshkey           = var.sshkey
+  resource-group   = module.common_infrastructure.resource-group
+  subnet-sap-db    = module.common_infrastructure.subnet-sap-db
+  storage-bootdiag = module.common_infrastructure.storage-bootdiag
+  ppg              = module.common_infrastructure.ppg
+}
+
+
 # Generate output files
 module "output_files" {
   source                       = "./modules/output_files"
@@ -68,5 +85,5 @@ module "output_files" {
   jumpboxes-linux              = module.jumpbox.jumpboxes-linux
   nics-dbnodes-admin           = module.hdb_node.nics-dbnodes-admin
   nics-dbnodes-db              = module.hdb_node.nics-dbnodes-db
-  loadbalancers                = module.hdb_node.loadbalancers
+  loadbalancers                = merge(module.hdb_node.loadbalancers,module.anydb_node.loadbalancers)
 }

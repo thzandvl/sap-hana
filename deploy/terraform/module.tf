@@ -85,5 +85,5 @@ module "output_files" {
   jumpboxes-linux              = module.jumpbox.jumpboxes-linux
   nics-dbnodes-admin           = module.hdb_node.nics-dbnodes-admin
   nics-dbnodes-db              = module.hdb_node.nics-dbnodes-db
-  loadbalancers                = merge(module.hdb_node.loadbalancers,module.anydb_node.loadbalancers)
+  loadbalancers                = module.hdb_node.loadbalancers
 }

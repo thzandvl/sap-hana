@@ -8,7 +8,11 @@
     "ppg": {
       "is_existing": "false",
       "name": "test-ppg",
+<<<<<<< HEAD
       "arm-id" :""
+=======
+      "arm_id" :""
+>>>>>>> 0da1fc6d928829eac3658dd73c9b8eb3f1d95a3c
     },
     "vnets": {
       "management": {
@@ -154,6 +158,14 @@
       }
     }
   ],
+  "application": {
+    "sid": "HN1",
+    "enable_deployment": true,
+    "scs_instance_number": "01",
+    "ers_instance_number": "02",
+    "scs_high_availability": true,
+    "application_server_count": 1
+  },
   "software": {
     "storage_account_sapbits": {
       "is_existing": false,

@@ -4,12 +4,12 @@ resource "azurerm_network_interface" "nics-scs" {
   name                          = "scs${count.index}-${var.application.sid}-nic"
   location                      = var.resource-group[0].location
   resource_group_name           = var.resource-group[0].name
-  enable_accelerated_networking = true
+  enable_accelerated_networking = local.scs_nic_accelerated_networking
 
   ip_configuration {
     name                          = "scs${count.index}-${var.application.sid}-nic-ip"
     subnet_id                     = var.infrastructure.vnets.sap.subnet_app.is_existing ? data.azurerm_subnet.subnet-sap-app[0].id : azurerm_subnet.subnet-sap-app[0].id
-    private_ip_address            = "10.1.3.1${count.index}"
+    private_ip_address            = cidrhost(var.infrastructure.vnets.sap.subnet_app.prefix, tonumber(count.index) + local.ip_offsets.scs_vm)
     private_ip_address_allocation = "static"
   }
 }
@@ -27,7 +27,7 @@ resource "azurerm_lb" "scs-lb" {
       name                          = "${frontend_ip_configuration.value == 0 ? "scs" : "ers"}-${var.application.sid}-lb-feip"
       subnet_id                     = var.infrastructure.vnets.sap.subnet_app.is_existing ? data.azurerm_subnet.subnet-sap-app[0].id : azurerm_subnet.subnet-sap-app[0].id
       private_ip_address_allocation = "Static"
-      private_ip_address            = "10.1.3.${5 + frontend_ip_configuration.value}"
+      private_ip_address            = cidrhost(var.infrastructure.vnets.sap.subnet_app.prefix, tonumber(frontend_ip_configuration.value) + local.ip_offsets.scs_lb)
     }
   }
 }
@@ -112,9 +112,8 @@ resource "azurerm_linux_virtual_machine" "vm-scs" {
   network_interface_ids        = [
     azurerm_network_interface.nics-scs[count.index].id
   ]
-  size                            = "Standard_D8s_v3"
-  admin_username                  = "scsadmin"
-  admin_password                  = "password"
+  size                            = local.scs_vm_size
+  admin_username                  = var.application.authentication.username
   disable_password_authentication = true
 
   os_disk {
@@ -124,14 +123,14 @@ resource "azurerm_linux_virtual_machine" "vm-scs" {
   }
 
   source_image_reference {
-    publisher = "suse"
-    offer     = "sles-sap-12-sp5"
-    sku       = "gen1"
+    publisher = local.os.publisher
+    offer     = local.os.offer
+    sku       = local.os.sku
     version   = "latest"
   }
 
   admin_ssh_key {
-    username   = "scsadmin"
+    username   = var.application.authentication.username
     public_key = file(var.sshkey.path_to_public_key)
   }
 

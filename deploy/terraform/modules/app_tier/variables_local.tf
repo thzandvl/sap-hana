@@ -20,6 +20,37 @@ locals {
   scs_instance_number = lookup(var.application, "scs_instance_number", "01")
   ers_instance_number = lookup(var.application, "ers_instance_number", "02")
 
+  # Subnet IP Offsets
+  # Note: First 4 IP addresses in a subnet are reserved by Azure
+  ip_offsets = {
+    scs_lb = 4 + 1
+    scs_vm = 4 + 6
+    app_vm = 4 + 10
+  }
+
+  # OS image for all Application Tier VMs
+  os = lookup(var.application, "os", {
+    publisher = "suse"
+    offer     = "sles-sap-12-sp5"
+    sku       = "gen1"
+  })
+
+  # Default VM config should be merged with any the user passes in
+  app_sku_map = merge(
+    {
+      app = "Standard_D4s_v3,false"
+      scs = "Standard_D4s_v3,false"
+    },
+    lookup(var.application, "vm_config", {})
+  )
+
+  app_vm_size                    = element(split(",", lookup(local.app_sku_map, "app", false)), 0)
+  app_nic_accelerated_networking = element(split(",", lookup(local.app_sku_map, "app", false)), 1)
+
+  scs_vm_size                    = element(split(",", lookup(local.app_sku_map, "scs", false)), 0)
+  scs_nic_accelerated_networking = element(split(",", lookup(local.app_sku_map, "scs", false)), 1)
+
+
   # Ports used for specific ASCS and ERS
   lb-ports = {
     "scs" = [

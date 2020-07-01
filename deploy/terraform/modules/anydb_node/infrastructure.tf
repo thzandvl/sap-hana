@@ -15,7 +15,7 @@ resource "azurerm_availability_set" "db-as" {
 
 
 # Creates db subnet of SAP VNET
-resource "azurerm_subnet" "subnet-anydb" {
+resource "azurerm_subnet" "anydb" {
   count                = local.enable_deployment ? (var.infrastructure.vnets.sap.subnet_db.is_existing ? 0 : 1) : 0
   name                 = var.infrastructure.vnets.sap.subnet_db.name
   resource_group_name  = var.vnet-sap[0].resource_group_name
@@ -52,4 +52,3 @@ resource "azurerm_subnet_network_security_group_association" "Associate-nsg-db" 
   subnet_id                 = var.infrastructure.vnets.sap.subnet_db.is_existing ? data.azurerm_subnet.subnet-anydb[0].id : azurerm_subnet.subnet-anydb[0].id
   network_security_group_id = var.infrastructure.vnets.sap.subnet_db.nsg.is_existing ? data.azurerm_network_security_group.nsg-anydb[0].id : azurerm_network_security_group.nsg-anydb[0].id
 }
-

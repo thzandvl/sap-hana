@@ -404,18 +404,18 @@
             },
             {
                 "name": "data",
-                "count": 3,
+                "count": 4,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 63,
                 "caching": "None",
                 "write_accelerator": false,
                 "mount_point": "/hana/data"
             },
             {
                 "name": "log",
-                "count": 2,
+                "count": 3,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 127,
                 "caching": "None",
                 "write_accelerator": true,
                 "mount_point": "/hana/log"
@@ -464,18 +464,18 @@
             },
             {
                 "name": "data",
-                "count": 3,
+                "count": 4,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 63,
                 "caching": "None",
                 "write_accelerator": false,
                 "mount_point": "/hana/data"
             },
             {
                 "name": "log",
-                "count": 2,
+                "count": 3,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 127,
                 "caching": "None",
                 "write_accelerator": true,
                 "mount_point": "/hana/log"
@@ -519,23 +519,23 @@
                 "name": "os",
                 "count": 1,
                 "disk_type": "Premium_LRS",
-                "size_gb": 127,
+                "size_gb": 63,
                 "caching": "ReadWrite"
             },
             {
                 "name": "data",
-                "count": 3,
+                "count": 4,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 127,
                 "caching": "None",
                 "write_accelerator": false,
                 "mount_point": "/hana/data"
             },
             {
                 "name": "log",
-                "count": 2,
+                "count": 3,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 127,
                 "caching": "None",
                 "write_accelerator": true,
                 "mount_point": "/hana/log"
@@ -586,16 +586,16 @@
                 "name": "data",
                 "count": 4,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 255,
                 "caching": "None",
                 "write_accelerator": false,
                 "mount_point": "/hana/data"
             },
             {
                 "name": "log",
-                "count": 2,
+                "count": 3,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 255,
                 "caching": "None",
                 "write_accelerator": true,
                 "mount_point": "/hana/log"
@@ -639,23 +639,23 @@
                 "name": "os",
                 "count": 1,
                 "disk_type": "Premium_LRS",
-                "size_gb": 127,
+                "size_gb": 63,
                 "caching": "ReadWrite"
             },
             {
                 "name": "data",
-                "count": 3,
+                "count": 4,
                 "disk_type": "Premium_LRS",
-                "size_gb": 1023,
+                "size_gb": 511,
                 "caching": "None",
                 "write_accelerator": false,
                 "mount_point": "/hana/data"
             },
             {
                 "name": "log",
-                "count": 2,
+                "count": 3,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 255,
                 "caching": "None",
                 "write_accelerator": true,
                 "mount_point": "/hana/log"
@@ -704,18 +704,18 @@
             },
             {
                 "name": "data",
-                "count": 3,
+                "count": 4,
                 "disk_type": "Premium_LRS",
-                "size_gb": 1023,
+                "size_gb": 511,
                 "caching": "None",
                 "write_accelerator": false,
                 "mount_point": "/hana/data"
             },
             {
                 "name": "log",
-                "count": 2,
+                "count": 3,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 255,
                 "caching": "None",
                 "write_accelerator": true,
                 "mount_point": "/hana/log"
@@ -764,7 +764,7 @@
             },
             {
                 "name": "data",
-                "count": 5,
+                "count": 4,
                 "disk_type": "Premium_LRS",
                 "size_gb": 1023,
                 "caching": "None",
@@ -773,9 +773,9 @@
             },
             {
                 "name": "log",
-                "count": 2,
+                "count": 3,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 255,
                 "caching": "None",
                 "write_accelerator": true,
                 "mount_point": "/hana/log"
@@ -833,9 +833,9 @@
             },
             {
                 "name": "log",
-                "count": 2,
+                "count": 3,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 255,
                 "caching": "None",
                 "write_accelerator": true,
                 "mount_point": "/hana/log"
@@ -893,9 +893,9 @@
             },
             {
                 "name": "log",
-                "count": 2,
+                "count": 3,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 255,
                 "caching": "None",
                 "write_accelerator": true,
                 "mount_point": "/hana/log"
@@ -953,9 +953,9 @@
             },
             {
                 "name": "log",
-                "count": 2,
+                "count": 3,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 255,
                 "caching": "None",
                 "write_accelerator": true,
                 "mount_point": "/hana/log"
@@ -1004,18 +1004,18 @@
             },
             {
                 "name": "data",
-                "count": 8,
+                "count": 4,
                 "disk_type": "Premium_LRS",
-                "size_gb": 2047,
+                "size_gb": 4095,
                 "caching": "None",
                 "write_accelerator": false,
                 "mount_point": "/hana/data"
             },
             {
                 "name": "log",
-                "count": 2,
+                "count": 3,
                 "disk_type": "Premium_LRS",
-                "size_gb": 511,
+                "size_gb": 255,
                 "caching": "None",
                 "write_accelerator": true,
                 "mount_point": "/hana/log"

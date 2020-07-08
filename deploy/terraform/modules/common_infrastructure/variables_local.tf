@@ -31,4 +31,8 @@ locals {
 
   # Shortcut to subnet block for iSCSI in input JSON
   subnet_iscsi = merge({ "is_existing" = "false" }, lookup(var.infrastructure.vnets.sap, "subnet_iscsi", {}))
+
+  # The peering name can be max 80 characters
+  peeringNameTemp = "${var.infrastructure.vnets.management.is_existing ? data.azurerm_virtual_network.vnet-management[0].resource_group_name : azurerm_virtual_network.vnet-management[0].resource_group_name}_${var.infrastructure.vnets.management.is_existing ? data.azurerm_virtual_network.vnet-management[0].name : azurerm_virtual_network.vnet-management[0].name}-${var.infrastructure.vnets.sap.is_existing ? data.azurerm_virtual_network.vnet-sap[0].resource_group_name : azurerm_virtual_network.vnet-sap[0].resource_group_name}_${var.infrastructure.vnets.sap.is_existing ? data.azurerm_virtual_network.vnet-sap[0].name : azurerm_virtual_network.vnet-sap[0].name}"
+  peeringName = length(local.peeringNameTemp) > 80 ? substr(local.peeringNameTemp, 0, 80) : local.peeringNameTemp
 }

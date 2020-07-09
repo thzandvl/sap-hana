@@ -65,8 +65,6 @@ variable "nics-anydb" {
 variable "any-database-info" {
   description = "Updated any database json"
 }
-
-
 locals {
   ips-iscsi                    = var.nics-iscsi[*].private_ip_address
   ips-jumpboxes-windows        = var.nics-jumpboxes-windows[*].private_ip_address

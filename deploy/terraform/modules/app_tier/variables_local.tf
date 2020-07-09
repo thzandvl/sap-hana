@@ -2,6 +2,10 @@ variable "resource-group" {
   description = "Details of the resource group"
 }
 
+variable "subnet-mgmt" {
+  description = "Details of the management subnet"
+}
+
 variable "vnet-sap" {
   description = "Details of the SAP VNet"
 }
@@ -16,6 +20,20 @@ variable "ppg" {
 
 # Set defaults
 locals {
+
+  # APP subnet
+  var_sub_app    = try(var.infrastructure.vnets.sap.subnet_app, {})
+  sub_app_exists = try(local.var_sub_app.is_existing, false)
+  sub_app_arm_id = local.sub_app_exists ? try(local.var_sub_app.arm_id, "") : ""
+  sub_app_name   = local.sub_app_exists ? "" : try(local.var_sub_app.name, "subnet-app")
+  sub_app_prefix = local.sub_app_exists ? "" : try(local.var_sub_app.prefix, "10.1.4.0/24")
+
+  # APP NSG
+  var_sub_app_nsg    = try(local.var_sub_app.nsg, {})
+  sub_app_nsg_exists = try(local.var_sub_app_nsg.is_existing, false)
+  sub_app_nsg_arm_id = local.sub_app_nsg_exists ? try(local.var_sub_app_nsg.arm_id, "") : ""
+  sub_app_nsg_name   = local.sub_app_nsg_exists ? "" : try(local.var_sub_app_nsg.name, "nsg-app")
+
   application_sid          = try(var.application.sid, "HN1")
   enable_deployment        = try(var.application.enable_deployment, false)
   scs_instance_number      = try(var.application.scs_instance_number, "01")
@@ -29,19 +47,28 @@ locals {
   scs_nic_ips              = try(var.application.scs_nic_ips, [])
   web_lb_ips               = try(var.application.web_lb_ips, [])
   web_nic_ips              = try(var.application.web_nic_ips, [])
-  authentication = try(var.application.authentication,
+
+  app_ostype = try(var.application.os.os_type, "Linux")
+
+  authentication = try(var.application.authentication, 
     {
-      "type"     = "key"
+      "type"     = upper(local.app_ostype) == "LINUX" ? "key" : "password"
       "username" = "azureadm"
+      "password" = "Sap@hana2019!"
   })
+
   # OS image for all Application Tier VMs
-  os = merge({
-    version = "latest"
-    }, try(var.application.os, {
-      publisher = "suse"
-      offer     = "sles-sap-12-sp5"
-      sku       = "gen1"
-  }))
+  # If custom image is used, we do not overwrite os reference with default value
+  app_custom_image = try(var.application.os.source_image_id, "") != "" ? true : false
+
+  app_os = {
+    "source_image_id" = local.app_custom_image ? var.application.os.source_image_id : ""
+    "publisher"       = try(var.application.os.publisher, local.app_custom_image ? "" : "suse")
+    "offer"           = try(var.application.os.offer, local.app_custom_image ? "" : "sles-sap-12-sp5")
+    "sku"             = try(var.application.os.sku, local.app_custom_image ? "" : "gen1")
+    "version"         = try(var.application.os.version, local.app_custom_image ? "" : "latest")
+  }
+
 }
 
 # Imports Disk sizing sizing information
